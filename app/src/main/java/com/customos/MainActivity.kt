@@ -1,9 +1,8 @@
 package com.customos
 
-import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,13 +24,21 @@ class MainActivity : AppCompatActivity() {
         val pager = findViewById<ViewPager2>(R.id.pager)
         pager.adapter = ScreenPagerAdapter(this)
         pager.setCurrentItem(0, false)
+        pager.setPageTransformer { page, position ->
+            page.alpha = 1 - kotlin.math.abs(position) * 0.3f
+            page.scaleY = 1 - (kotlin.math.abs(position) * 0.08f)
+        }
 
-        val dot1 = findViewById<View>(R.id.dot1)
-        val dot2 = findViewById<View>(R.id.dot2)
+        val dots = listOf(
+            findViewById<View>(R.id.dot1),
+            findViewById<View>(R.id.dot2),
+            findViewById<View>(R.id.dot3)
+        )
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                dot1.setBackgroundResource(if (position == 0) R.drawable.dot_active else R.drawable.dot_inactive)
-                dot2.setBackgroundResource(if (position == 1) R.drawable.dot_active else R.drawable.dot_inactive)
+                dots.forEachIndexed { i, dot ->
+                    dot.setBackgroundResource(if (i == position) R.drawable.dot_active else R.drawable.dot_inactive)
+                }
             }
         })
     }
@@ -39,19 +46,24 @@ class MainActivity : AppCompatActivity() {
     fun setWallpaper(uri: Uri) {
         try {
             val input = contentResolver.openInputStream(uri)
-            val file = File(filesDir, "wallpaper.jpg")
-            val output = FileOutputStream(file)
-            input?.copyTo(output)
+            val original = BitmapFactory.decodeStream(input)
             input?.close()
+
+            val blurred = BlurUtils.blur(this, original, 18f)
+
+            val file = File(filesDir, "wallpaper_blur.jpg")
+            val output = FileOutputStream(file)
+            blurred.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, output)
             output.close()
-            wallpaperView.setImageURI(Uri.fromFile(file))
+
+            wallpaperView.setImageBitmap(blurred)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     private fun loadSavedWallpaper() {
-        val file = File(filesDir, "wallpaper.jpg")
+        val file = File(filesDir, "wallpaper_blur.jpg")
         if (file.exists()) {
             wallpaperView.setImageURI(Uri.fromFile(file))
         }

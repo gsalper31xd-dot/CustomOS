@@ -11,12 +11,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Generate stable debug keystore
-        run: |
-          keytool -genkeypair -v -keystore app/debug.keystore \
-            -storepass android -keypass android \
-            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
-            -dname "CN=CustomOS, OU=Dev, O=CustomOS, L=City, S=State, C=TR"
       - name: Build APK with Gradle 8.4
         uses: gradle/actions/setup-gradle@v3
         with:
