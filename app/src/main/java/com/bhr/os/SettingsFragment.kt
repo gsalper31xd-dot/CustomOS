@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.bhr.os.R
 
 class SettingsFragment : Fragment() {
 
@@ -13,7 +12,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.page_settings, container, false)
-        val prefs = requireContext().getSharedPreferences("customos_prefs", 0)
+        val prefs = requireContext().getSharedPreferences("bhr_prefs", 0)
 
         view.findViewById<View>(R.id.themeCream).setOnClickListener {
             prefs.edit().putString("theme", "cream").apply()
