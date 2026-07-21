@@ -1,9 +1,7 @@
 package com.customos
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
@@ -40,9 +38,9 @@ class MainActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         val apps = pm.queryIntentActivities(intent, 0)
             .filter { it.activityInfo.packageName != packageName }
-        val labels = apps.map { it.loadLabel(pm).toString() }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, labels)
-        grid.adapter = adapter
+            .sortedBy { it.loadLabel(pm).toString().lowercase() }
+
+        grid.adapter = AppAdapter(this, apps)
         grid.setOnItemClickListener { _, _, pos, _ ->
             val app = apps[pos]
             val launch = Intent(Intent.ACTION_MAIN)
