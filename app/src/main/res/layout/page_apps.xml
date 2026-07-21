@@ -2,15 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:paddingTop="48dp">
+    android:orientation="vertical">
 
     <GridView android:id="@+id/appGrid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:numColumns="5"
-        android:verticalSpacing="20dp"
-        android:horizontalSpacing="8dp"/>
+        android:verticalSpacing="18dp"
+        android:horizontalSpacing="4dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="8dp"
+        android:paddingHorizontal="8dp"/>
+
+    <TextView android:id="@+id/searchBar"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="🔍  Ara"
+        android:textColor="@color/text_muted"
+        android:textSize="13sp"
+        android:background="@drawable/search_bg"/>
+
+    <LinearLayout android:id="@+id/dock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/dock_bg"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:gravity="center">
+    </LinearLayout>
 
 </LinearLayout>
