@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <application
+        android:allowBackup="true"
+        android:label="CustomOS"
+        android:theme="@style/Theme.CustomOS">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.MONKEY"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
