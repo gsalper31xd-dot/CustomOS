@@ -11,20 +11,18 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v3
       - name: Generate stable debug keystore
         run: |
           keytool -genkeypair -v -keystore app/debug.keystore \
             -storepass android -keypass android \
             -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
             -dname "CN=CustomOS, OU=Dev, O=CustomOS, L=City, S=State, C=TR"
-          ls -la app/debug.keystore
+      - name: Setup Gradle Wrapper
+        run: gradle wrapper --gradle-version 8.4
       - name: Build APK
         run: |
-          cd app
-          ls -la debug.keystore
-          cd ..
-          gradle assembleDebug --stacktrace
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: CustomOS-debug
