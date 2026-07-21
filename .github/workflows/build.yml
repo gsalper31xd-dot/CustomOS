@@ -17,14 +17,11 @@ jobs:
             -storepass android -keypass android \
             -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
             -dname "CN=CustomOS, OU=Dev, O=CustomOS, L=City, S=State, C=TR"
-      - name: Download real gradle wrapper jar
-        run: |
-          curl -L -o gradle/wrapper/gradle-wrapper.jar \
-            https://github.com/gradle/gradle/raw/v8.4.0/gradle/wrapper/gradle-wrapper.jar
-      - name: Build APK
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace
+      - name: Build APK with Gradle 8.4
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.4'
+      - run: gradle assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: CustomOS-debug
