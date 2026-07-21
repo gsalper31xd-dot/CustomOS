@@ -1,4 +1,4 @@
-package com.customos
+package com.bhr.os
 
 import android.content.Intent
 import android.os.Bundle

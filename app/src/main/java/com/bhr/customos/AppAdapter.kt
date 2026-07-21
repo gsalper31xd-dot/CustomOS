@@ -1,4 +1,4 @@
-package com.customos
+package com.bhr.os
 
 import android.content.Context
 import android.content.pm.ResolveInfo

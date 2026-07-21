@@ -1,4 +1,4 @@
-package com.customos
+package com.bhr.os
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

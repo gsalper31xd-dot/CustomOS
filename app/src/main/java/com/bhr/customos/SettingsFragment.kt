@@ -1,4 +1,4 @@
-package com.customos
+package com.bhr.os
 
 import android.os.Bundle
 import android.view.LayoutInflater

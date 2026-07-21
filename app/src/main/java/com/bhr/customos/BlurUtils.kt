@@ -1,4 +1,4 @@
-package com.customos
+package com.bhr.os
 
 import android.graphics.Bitmap
 import android.renderscript.Allocation
