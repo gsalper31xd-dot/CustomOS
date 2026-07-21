@@ -17,8 +17,6 @@ jobs:
             -storepass android -keypass android \
             -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
             -dname "CN=CustomOS, OU=Dev, O=CustomOS, L=City, S=State, C=TR"
-      - name: Setup Gradle Wrapper
-        run: gradle wrapper --gradle-version 8.4
       - name: Build APK
         run: |
           chmod +x gradlew
