@@ -27,7 +27,7 @@
         android:textColor="@color/text_dark"
         android:textSize="13sp"
         android:padding="10dp"
-        android:background="@drawable/icon_bg"
+        android:background="@android:color/transparent"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>
