@@ -4,18 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView 
-        android:id="@+id/appGrid"
+    <GridView android:id="@+id/appGrid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:numColumns="5"
+        android:verticalSpacing="18dp"
+        android:horizontalSpacing="4dp"
         android:paddingTop="40dp"
         android:paddingBottom="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="none"
-        android:overScrollMode="never"/>
+        android:paddingHorizontal="8dp"/>
 
     <TextView android:id="@+id/searchBar"
         android:layout_width="180dp"
@@ -23,7 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="12dp"
         android:gravity="center"
-        android:text="Uygulama Ara"
+        android:text="Uygulama  Ara"
         android:textColor="@color/text_muted"
         android:textSize="13sp"
         android:background="@drawable/search_bg"/>
@@ -33,8 +31,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/dock_bg"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
         android:padding="10dp"
         android:gravity="center">
