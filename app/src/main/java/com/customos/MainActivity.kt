@@ -1,53 +1,59 @@
 package com.customos
 
-import android.content.Intent
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import android.widget.*
+import android.provider.MediaStore
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import java.text.SimpleDateFormat
-import java.util.*
+import androidx.viewpager2.widget.ViewPager2
+import java.io.File
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var wallpaperView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        updateClock()
-        setupAppDrawer()
-    }
 
-    private fun updateClock() {
-        val clockView = findViewById<TextView>(R.id.clock)
-        val dateView = findViewById<TextView>(R.id.date)
-        val handler = android.os.Handler(mainLooper)
-        val runnable = object : Runnable {
-            override fun run() {
-                val now = Date()
-                clockView.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(now)
-                dateView.text = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault()).format(now)
-                handler.postDelayed(this, 1000)
+        wallpaperView = findViewById(R.id.wallpaper)
+        loadSavedWallpaper()
+
+        val pager = findViewById<ViewPager2>(R.id.pager)
+        pager.adapter = ScreenPagerAdapter(this)
+        pager.setCurrentItem(0, false)
+
+        val dot1 = findViewById<View>(R.id.dot1)
+        val dot2 = findViewById<View>(R.id.dot2)
+        pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                dot1.setBackgroundResource(if (position == 0) R.drawable.dot_active else R.drawable.dot_inactive)
+                dot2.setBackgroundResource(if (position == 1) R.drawable.dot_active else R.drawable.dot_inactive)
             }
-        }
-        handler.post(runnable)
+        })
     }
 
-    private fun setupAppDrawer() {
-        val grid = findViewById<GridView>(R.id.appGrid)
-        val pm = packageManager
-        val intent = Intent(Intent.ACTION_MAIN, null)
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val apps = pm.queryIntentActivities(intent, 0)
-            .filter { it.activityInfo.packageName != packageName }
-            .sortedBy { it.loadLabel(pm).toString().lowercase() }
+    fun setWallpaper(uri: Uri) {
+        try {
+            val input = contentResolver.openInputStream(uri)
+            val file = File(filesDir, "wallpaper.jpg")
+            val output = FileOutputStream(file)
+            input?.copyTo(output)
+            input?.close()
+            output.close()
+            wallpaperView.setImageURI(Uri.fromFile(file))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
-        grid.adapter = AppAdapter(this, apps)
-        grid.setOnItemClickListener { _, _, pos, _ ->
-            val app = apps[pos]
-            val launch = Intent(Intent.ACTION_MAIN)
-            launch.addCategory(Intent.CATEGORY_LAUNCHER)
-            launch.setClassName(app.activityInfo.packageName, app.activityInfo.name)
-            launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(launch)
+    private fun loadSavedWallpaper() {
+        val file = File(filesDir, "wallpaper.jpg")
+        if (file.exists()) {
+            wallpaperView.setImageURI(Uri.fromFile(file))
         }
     }
 }
