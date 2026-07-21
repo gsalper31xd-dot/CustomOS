@@ -7,6 +7,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
@@ -44,21 +48,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setWallpaper(uri: Uri) {
-        try {
-            val input = contentResolver.openInputStream(uri)
-            val original = BitmapFactory.decodeStream(input)
-            input?.close()
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val blurred = withContext(Dispatchers.Default) {
+                    val input = contentResolver.openInputStream(uri)
+                    val original = BitmapFactory.decodeStream(input)
+                    input?.close()
+                    BlurUtils.blur(this@MainActivity, original, 18f)
+                }
 
-            val blurred = BlurUtils.blur(this, original, 18f)
+                withContext(Dispatchers.IO) {
+                    val file = File(filesDir, "wallpaper_blur.jpg")
+                    val output = FileOutputStream(file)
+                    blurred.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, output)
+                    output.close()
+                }
 
-            val file = File(filesDir, "wallpaper_blur.jpg")
-            val output = FileOutputStream(file)
-            blurred.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, output)
-            output.close()
-
-            wallpaperView.setImageBitmap(blurred)
-        } catch (e: Exception) {
-            e.printStackTrace()
+                wallpaperView.setImageBitmap(blurred)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

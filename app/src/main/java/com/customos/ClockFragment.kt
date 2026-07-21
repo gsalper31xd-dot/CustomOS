@@ -1,7 +1,6 @@
 package com.customos
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -14,6 +13,9 @@ import java.util.*
 
 class ClockFragment : Fragment() {
 
+    private var handler: android.os.Handler? = null
+    private var runnable: Runnable? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -21,16 +23,16 @@ class ClockFragment : Fragment() {
 
         val clockView = view.findViewById<TextView>(R.id.clock)
         val dateView = view.findViewById<TextView>(R.id.date)
-        val handler = android.os.Handler(requireActivity().mainLooper)
-        val runnable = object : Runnable {
+        handler = android.os.Handler(requireActivity().mainLooper)
+        runnable = object : Runnable {
             override fun run() {
                 val now = Date()
                 clockView.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(now)
                 dateView.text = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault()).format(now)
-                handler.postDelayed(this, 1000)
+                handler?.postDelayed(this, 60000)
             }
         }
-        handler.post(runnable)
+        handler?.post(runnable!!)
 
         view.findViewById<TextView>(R.id.changeWallpaper).setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -38,6 +40,11 @@ class ClockFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        runnable?.let { handler?.removeCallbacks(it) }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
