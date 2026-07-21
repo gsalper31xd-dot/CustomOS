@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="72sp"
-        android:textColor="#ffffff"
+        android:textColor="@color/text_dark"
         android:fontFamily="sans-serif-thin"
         android:layout_marginTop="60dp"/>
 
@@ -17,17 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textColor="#cccccc"
+        android:textColor="@color/text_muted"
         android:layout_marginBottom="16dp"/>
 
     <TextView android:id="@+id/changeWallpaper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Duvar kağıdını değiştir"
-        android:textColor="#88ffffff"
+        android:textColor="@color/text_dark"
         android:textSize="13sp"
-        android:padding="8dp"
-        android:background="#20ffffff"
+        android:padding="10dp"
+        android:background="@drawable/icon_bg"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>
