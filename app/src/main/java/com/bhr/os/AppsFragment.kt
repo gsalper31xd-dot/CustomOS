@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
@@ -25,12 +24,13 @@ class AppsFragment : Fragment() {
         val allApps = pm.queryIntentActivities(intent, 0)
             .filter { it.activityInfo.packageName != requireContext().packageName }
             .sortedBy { it.loadLabel(pm).toString().lowercase() }
+            .toMutableList()
 
-        val appsPerPage = 20  // 4 sütun × 5 satır
-        val pages = ceil(allApps.size.toDouble() / appsPerPage).toInt()
+        val appsPerPage = 20
+        val pages = ceil(allApps.size.toDouble() / appsPerPage).toInt().coerceAtLeast(1)
         val appPages = (0 until pages).map { page ->
-            allApps.drop(page * appsPerPage).take(appsPerPage)
-        }
+            allApps.drop(page * appsPerPage).take(appsPerPage).toMutableList()
+        }.toMutableList()
 
         val pager = ViewPager2(requireContext())
         pager.layoutParams = ViewGroup.LayoutParams(
@@ -48,7 +48,6 @@ class AppsFragment : Fragment() {
         val container = view as? ViewGroup
         container?.addView(pager, 0)
 
-        // Dock: ilk 4 app
         val dock = view.findViewById<LinearLayout>(R.id.dock)
         allApps.take(4).forEach { app ->
             val icon = ImageView(requireContext())
