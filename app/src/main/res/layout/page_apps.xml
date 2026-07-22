@@ -3,16 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridView android:id="@+id/appGrid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="5"
-        android:verticalSpacing="18dp"
-        android:horizontalSpacing="4dp"
-        android:paddingTop="40dp"
-        android:paddingBottom="80dp"
-        android:paddingHorizontal="8dp"
-        android:isScrollContainer="false"/>
+    <!-- ViewPager2 buraya eklenecek programatik olarak -->
 
     <LinearLayout
         android:layout_width="match_parent"
