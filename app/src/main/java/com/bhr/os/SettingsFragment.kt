@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class SettingsFragment : Fragment() {
@@ -27,15 +29,31 @@ class SettingsFragment : Fragment() {
             activity?.recreate()
         }
 
-        view.findViewById<View>(R.id.grid4).setOnClickListener {
-            prefs.edit().putInt("columns", 4).apply()
-            activity?.recreate()
-        }
-        view.findViewById<View>(R.id.grid5).setOnClickListener {
-            prefs.edit().putInt("columns", 5).apply()
-            activity?.recreate()
+        val pageCountView = view.findViewById<TextView>(R.id.pageCount)
+        val addBtn = view.findViewById<Button>(R.id.addPage)
+        val removeBtn = view.findViewById<Button>(R.id.removePage)
+
+        fun updatePageCount() {
+            val pages = prefs.getInt("app_pages", 1)
+            pageCountView.text = "Toplam: $pages sayfa"
+            removeBtn.isEnabled = pages > 1
         }
 
+        addBtn.setOnClickListener {
+            val pages = prefs.getInt("app_pages", 1)
+            prefs.edit().putInt("app_pages", pages + 1).apply()
+            updatePageCount()
+        }
+
+        removeBtn.setOnClickListener {
+            val pages = prefs.getInt("app_pages", 1)
+            if (pages > 1) {
+                prefs.edit().putInt("app_pages", pages - 1).apply()
+                updatePageCount()
+            }
+        }
+
+        updatePageCount()
         return view
     }
 }

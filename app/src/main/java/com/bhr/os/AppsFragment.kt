@@ -26,10 +26,15 @@ class AppsFragment : Fragment() {
             .sortedBy { it.loadLabel(pm).toString().lowercase() }
             .toMutableList()
 
+        val prefs = requireContext().getSharedPreferences("bhr_prefs", 0)
+        val maxPages = prefs.getInt("app_pages", 1)
         val appsPerPage = 20
-        val pages = ceil(allApps.size.toDouble() / appsPerPage).toInt().coerceAtLeast(1)
+        val maxApps = maxPages * appsPerPage
+        val limitedApps = allApps.take(maxApps).toMutableList()
+
+        val pages = ceil(limitedApps.size.toDouble() / appsPerPage).toInt().coerceAtLeast(1)
         val appPages = (0 until pages).map { page ->
-            allApps.drop(page * appsPerPage).take(appsPerPage).toMutableList()
+            limitedApps.drop(page * appsPerPage).take(appsPerPage).toMutableList()
         }.toMutableList()
 
         val pager = ViewPager2(requireContext())

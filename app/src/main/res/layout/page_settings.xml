@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CustomOS Ayarları"
+        android:text="BHR Launcher Ayarları"
         android:textColor="@color/text_dark"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -46,7 +46,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Grid Boyutu"
+        android:text="Uygulama Sayfaları"
         android:textColor="@color/text_muted"
         android:textSize="14sp"
         android:layout_marginBottom="8dp"/>
@@ -54,20 +54,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
 
-        <TextView android:id="@+id/grid4"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="4 sütun" android:padding="10dp"
-            android:background="@drawable/search_bg"
+        <Button android:id="@+id/addPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Sayfa Ekle"
             android:textColor="@color/text_dark"
-            android:layout_marginEnd="8dp"/>
-        <TextView android:id="@+id/grid5"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="5 sütun" android:padding="10dp"
-            android:background="@drawable/search_bg"
-            android:textColor="@color/text_dark"/>
+            android:layout_marginEnd="8dp"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+        <Button android:id="@+id/removePage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="- Sayfa Kaldır"
+            android:textColor="@color/text_dark"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
+
+    <TextView android:id="@+id/pageCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_muted"
+        android:textSize="12sp"/>
 
 </LinearLayout>
