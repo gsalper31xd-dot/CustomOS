@@ -38,9 +38,11 @@ class AppsFragment : Fragment() {
         searchBox = view.findViewById(R.id.searchBox)
         val container = view as? ViewGroup
 
-        setupPager(allApps, container)
+        val prefs = requireContext().getSharedPreferences("bhr_prefs", 0)
+        val maxPages = prefs.getInt("app_pages", 1)
+        
+        setupPager(allApps, container, maxPages)
 
-        // Swipe-down açılsın/kapansın
         container?.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> startY = event.y
@@ -71,7 +73,7 @@ class AppsFragment : Fragment() {
                         it.loadLabel(pm).toString().lowercase().contains(query)
                     }.toMutableList()
                 }
-                setupPager(filtered, container)
+                setupPager(filtered, container, maxPages)
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -98,15 +100,18 @@ class AppsFragment : Fragment() {
         return view
     }
 
-    private fun setupPager(apps: MutableList<android.content.pm.ResolveInfo>, container: ViewGroup?) {
+    private fun setupPager(apps: MutableList<android.content.pm.ResolveInfo>, container: ViewGroup?, maxPages: Int) {
         if (::pager.isInitialized) {
             container?.removeView(pager)
         }
 
         val appsPerPage = 20
-        val pages = ceil(apps.size.toDouble() / appsPerPage).toInt().coerceAtLeast(1)
+        val maxApps = maxPages * appsPerPage
+        val limitedApps = apps.take(maxApps).toMutableList()
+        
+        val pages = ceil(limitedApps.size.toDouble() / appsPerPage).toInt().coerceAtLeast(1)
         val appPages = (0 until pages).map { page ->
-            apps.drop(page * appsPerPage).take(appsPerPage).toMutableList()
+            limitedApps.drop(page * appsPerPage).take(appsPerPage).toMutableList()
         }.toMutableList()
 
         pager = ViewPager2(requireContext())
