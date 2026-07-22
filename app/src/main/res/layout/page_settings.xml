@@ -26,8 +26,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
+        android:orientation="horizontal">
 
         <View android:id="@+id/themeCream"
             android:layout_width="48dp" android:layout_height="48dp"
@@ -42,42 +41,5 @@
             android:background="#D6E4F0"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Uygulama Sayfaları"
-        android:textColor="@color/text_muted"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
-
-        <Button android:id="@+id/addPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+ Sayfa Ekle"
-            android:textColor="@color/text_dark"
-            android:layout_marginEnd="8dp"
-            style="@style/Widget.AppCompat.Button.Colored"/>
-
-        <Button android:id="@+id/removePage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="- Sayfa Kaldır"
-            android:textColor="@color/text_dark"
-            style="@style/Widget.AppCompat.Button.Colored"/>
-
-    </LinearLayout>
-
-    <TextView android:id="@+id/pageCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_muted"
-        android:textSize="12sp"/>
 
 </LinearLayout>

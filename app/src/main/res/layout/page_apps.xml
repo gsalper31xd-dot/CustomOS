@@ -3,7 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- ViewPager2 buraya eklenecek programatik olarak -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText android:id="@+id/searchBox"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Uygulama ara..."
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/text_muted"
+            android:textSize="14sp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/search_bg"
+            android:layout_margin="16dp"
+            android:visibility="gone"/>
+
+        <!-- ViewPager2 buraya eklenir programatik olarak -->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,17 +30,6 @@
         android:orientation="vertical"
         android:layout_gravity="bottom"
         android:padding="16dp">
-
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="🔍  Ara"
-            android:textColor="@color/text_muted"
-            android:textSize="13sp"
-            android:background="@drawable/search_bg"
-            android:layout_marginBottom="12dp"/>
 
         <LinearLayout android:id="@+id/dock"
             android:layout_width="match_parent"
